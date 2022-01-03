@@ -23,7 +23,7 @@ class Account
     private string $nickname;
 
     #[ORM\Column(type: 'integer', options: ["default" => 0])]
-    private int $wallet;
+    private float $wallet;
 
     public function getId(): ?int
     {
@@ -66,12 +66,12 @@ class Account
         return $this;
     }
 
-    public function getWallet(): ?int
+    public function getWallet(): ?float
     {
         return $this->wallet;
     }
 
-    public function setWallet(int $wallet): self
+    public function setWallet(float $wallet): self
     {
         $this->wallet = $wallet;
 
