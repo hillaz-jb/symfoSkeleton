@@ -11,19 +11,19 @@ class Account
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    private int $id;
 
     #[ORM\Column(type: 'string', length: 120)]
-    private $name;
+    private string $name;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $email;
+    private string $email;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $nickname;
+    private string $nickname;
 
-    #[ORM\Column(type: 'integer')]
-    private $wallet;
+    #[ORM\Column(type: 'integer', options: ["default" => 0])]
+    private int $wallet;
 
     public function getId(): ?int
     {
