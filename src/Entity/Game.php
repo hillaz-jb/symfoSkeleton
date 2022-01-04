@@ -3,9 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\GameRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JetBrains\PhpStorm\Pure;
 
 #[ORM\Entity(repositoryClass: GameRepository::class)]
 class Game
@@ -13,36 +15,36 @@ class Game
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    private int $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $name;
+    private string $name;
 
     #[ORM\Column(type: 'datetime')]
-    private $publishedAt;
+    private DateTime $publishedAt;
 
     #[ORM\Column(type: 'float')]
-    private $price;
+    private float $price;
 
     #[ORM\Column(type: 'text', nullable: true)]
-    private $description;
+    private string $description;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $thumbnailCover;
+    private string $thumbnailCover;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $thumbnailLogo;
+    private string $thumbnailLogo;
 
     #[ORM\ManyToMany(targetEntity: Language::class)]
-    private $languages;
+    private Collection $languages;
 
     #[ORM\ManyToMany(targetEntity: Genre::class, inversedBy: 'games')]
-    private $genres;
+    private Collection $genres;
 
     #[ORM\OneToMany(mappedBy: 'game', targetEntity: Comments::class, orphanRemoval: true)]
-    private $comments;
+    private Collection $comments;
 
-    public function __construct()
+    #[Pure] public function __construct()
     {
         $this->languages = new ArrayCollection();
         $this->genres = new ArrayCollection();
@@ -66,12 +68,12 @@ class Game
         return $this;
     }
 
-    public function getPublishedAt(): ?\DateTimeInterface
+    public function getPublishedAt(): ?DateTime
     {
         return $this->publishedAt;
     }
 
-    public function setPublishedAt(\DateTimeInterface $publishedAt): self
+    public function setPublishedAt(DateTime $publishedAt): self
     {
         $this->publishedAt = $publishedAt;
 

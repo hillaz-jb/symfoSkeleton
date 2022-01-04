@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\LibraryRepository;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: LibraryRepository::class)]
@@ -11,24 +12,24 @@ class Library
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    private int $id;
 
     #[ORM\Column(type: 'boolean')]
-    private $installed;
+    private bool $installed;
 
     #[ORM\Column(type: 'integer')]
-    private $gameTime;
+    private int $gameTime;
 
     #[ORM\Column(type: 'datetime', nullable: true)]
-    private $lastUsed;
+    private DateTime $lastUsed;
 
     #[ORM\ManyToOne(targetEntity: Game::class)]
     #[ORM\JoinColumn(nullable: false)]
-    private $game;
+    private Game $game;
 
     #[ORM\ManyToOne(targetEntity: Account::class, inversedBy: 'libraries')]
     #[ORM\JoinColumn(nullable: false)]
-    private $account;
+    private Account $account;
 
     public function getId(): ?int
     {
@@ -59,12 +60,12 @@ class Library
         return $this;
     }
 
-    public function getLastUsed(): ?\DateTimeInterface
+    public function getLastUsed(): ?DateTime
     {
         return $this->lastUsed;
     }
 
-    public function setLastUsed(?\DateTimeInterface $lastUsed): self
+    public function setLastUsed(?DateTime $lastUsed): self
     {
         $this->lastUsed = $lastUsed;
 

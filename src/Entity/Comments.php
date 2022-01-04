@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\CommentsRepository;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CommentsRepository::class)]
@@ -11,38 +12,38 @@ class Comments
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    private int $id;
 
     #[ORM\Column(type: 'datetime')]
-    private $createdAt;
+    private DateTime $createdAt;
 
     #[ORM\Column(type: 'text')]
-    private $content;
+    private string $content;
 
     #[ORM\Column(type: 'integer')]
-    private $upVotes;
+    private int $upVotes;
 
     #[ORM\Column(type: 'integer')]
-    private $downVotes;
+    private int $downVotes;
 
     #[ORM\ManyToOne(targetEntity: Account::class, inversedBy: 'comments')]
-    private $account;
+    private Account $account;
 
     #[ORM\ManyToOne(targetEntity: Game::class, inversedBy: 'comments')]
     #[ORM\JoinColumn(nullable: false)]
-    private $game;
+    private Game $game;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?DateTime
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function setCreatedAt(DateTime $createdAt): self
     {
         $this->createdAt = $createdAt;
 

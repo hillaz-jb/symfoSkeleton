@@ -6,6 +6,7 @@ use App\Repository\GenreRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JetBrains\PhpStorm\Pure;
 
 #[ORM\Entity(repositoryClass: GenreRepository::class)]
 class Genre
@@ -13,15 +14,15 @@ class Genre
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    private int $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $name;
+    private string $name;
 
     #[ORM\ManyToMany(targetEntity: Game::class, mappedBy: 'genres')]
-    private $games;
+    private Collection $games;
 
-    public function __construct()
+    #[Pure] public function __construct()
     {
         $this->games = new ArrayCollection();
     }

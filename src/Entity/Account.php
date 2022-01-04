@@ -6,6 +6,7 @@ use App\Repository\AccountRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JetBrains\PhpStorm\Pure;
 
 #[ORM\Entity(repositoryClass: AccountRepository::class)]
 class Account
@@ -28,12 +29,12 @@ class Account
     private float $wallet;
 
     #[ORM\OneToMany(mappedBy: 'account', targetEntity: Comments::class)]
-    private $comments;
+    private Collection $comments;
 
     #[ORM\OneToMany(mappedBy: 'account', targetEntity: Library::class, orphanRemoval: true)]
-    private $libraries;
+    private Collection $libraries;
 
-    public function __construct()
+    #[Pure] public function __construct()
     {
         $this->comments = new ArrayCollection();
         $this->libraries = new ArrayCollection();
