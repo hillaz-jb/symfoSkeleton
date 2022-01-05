@@ -1,7 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+{% block title %}Accueil Steam-ish{% endblock %}
 
 {% block body %}
-<p class="text-danger">HOME</p>
-{% endblock %}
+<div class="container mt-5">
+    <h1>Bienvenue sur Steam-ish</h1>
+    <div>
+        <h2 class="text-center">Les jeux</h2>
+        <div class="row row-cols-1 row-cols-lg-3 row-cols-xl-5">
+            {% for game in gamesAlpha %}
+                {% include 'common/partials/_cardGame.html.twig' with {'entity': game} %}
+            {% endfor %}
+        </div>
+    </div>
+    <div>
+        <h2 class="text-center">Les dernières sorties</h2>
+        <div class="row row-cols-1 row-cols-lg-3 row-cols-xl-5">
+            {% for game in gamesLast %}
+                {% include 'common/partials/_cardGame.html.twig' with {'entity': game} %}
+            {% endfor %}
+        </div>
+    </div>
+    {% endblock %}

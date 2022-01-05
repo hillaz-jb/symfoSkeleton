@@ -19,6 +19,14 @@ class AccountRepository extends ServiceEntityRepository
         parent::__construct($registry, Account::class);
     }
 
+    public function findLimitedNbAccount(int $limit = 20): array {
+        return $this->createQueryBuilder('account')
+            ->select()
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Account[] Returns an array of Account objects
     //  */

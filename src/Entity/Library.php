@@ -17,7 +17,7 @@ class Library
     #[ORM\Column(type: 'boolean')]
     private bool $installed;
 
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: 'integer', options:["default" => 0])]
     private int $gameTime;
 
     #[ORM\Column(type: 'datetime', nullable: true)]

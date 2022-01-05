@@ -2,12 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\CommentsRepository;
+use App\Repository\CommentRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: CommentsRepository::class)]
-class Comments
+#[ORM\Entity(repositoryClass: CommentRepository::class)]
+class Comment
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -20,10 +20,10 @@ class Comments
     #[ORM\Column(type: 'text')]
     private string $content;
 
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: 'integer', options:["default" => 0])]
     private int $upVotes;
 
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: 'integer', options:["default" => 0])]
     private int $downVotes;
 
     #[ORM\ManyToOne(targetEntity: Account::class, inversedBy: 'comments')]
