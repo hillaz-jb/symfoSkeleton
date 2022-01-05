@@ -19,6 +19,17 @@ class CommentRepository extends ServiceEntityRepository
         parent::__construct($registry, Comment::class);
     }
 
+    public function findLimitedComments(string $orderField, string $order, int $limit = 10): array {
+        return $this->createQueryBuilder('comment')
+            ->select('comment', 'game', 'account')
+            ->join('comment.account', 'account')
+            ->join('comment.game', 'game')
+            ->orderBy('comment.'.$orderField, $order)
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Comments[] Returns an array of Comments objects
     //  */

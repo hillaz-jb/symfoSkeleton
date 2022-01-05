@@ -21,4 +21,25 @@
             {% endfor %}
         </div>
     </div>
+    <div>
+        <h2 class="text-center">Commentaires clients</h2>
+        <div class="row row-cols-1 row-cols-lg-3 row-cols-xl-5">
+            {% for comment in commentsLast %}
+                <div>
+                    <h3>{{ comment.game.name }}</h3>
+                    <p>{{ comment.content }}</p>
+                    <p>{{ comment.account.name }} le {{ comment.createdAt|date('d-m-Y') }}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div>
+        <h2 class="text-center">Les jeux les plus joués</h2>
+        <div class="row row-cols-1 row-cols-lg-3 row-cols-xl-5">
+            {% for game in gamesMostPlayed %}
+                {% include 'common/partials/_cardGame.html.twig' with {'entity': game} %}
+            {% endfor %}
+        </div>
+    </div>
     {% endblock %}
+

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Game;
+use App\Entity\Library;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -44,6 +45,17 @@ class GameRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('game')
             ->select('game')
             ->orderBy('game.'.$orderField, $order)
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findMostPlayedGames(int $limit = 10): array {
+        return $this->createQueryBuilder('game')
+            ->select('game')
+            ->join(Library::class, 'lib', 'WITH', 'lib.game = game')
+            ->groupBy('game')
+            ->orderBy('count(game)', 'DESC')
             ->setMaxResults($limit)
             ->getQuery()
             ->getResult();
