@@ -17,7 +17,7 @@ class HomeController extends AbstractController
         return $this->render('home/index.html.twig', [
             'gamesAlpha' => $gameRepository->findLimitedGames('name', 'ASC'),
             'gamesLast' => $gameRepository->findLimitedGames('publishedAt', 'DESC',5),
-            'commentsLast' => $commentRepository->findLimitedComments('createdAt', 'DESC',5),
+            'commentsLast' => $commentRepository->findLimitedComments('createdAt', 'DESC',6),
             'gamesMostPlayed' => $gameRepository->findMostPlayedGames(),
         ]);
     }

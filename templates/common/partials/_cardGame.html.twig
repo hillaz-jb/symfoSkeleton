@@ -1,9 +1,14 @@
-<div class="col mb-5">
+<div class="col mb-5 global-card">
     <a href="{{ path('game_show', {'id': entity.id}) }}" class="card h-100 g-2 text-center text-decoration-none">
         <img src="{{ entity.thumbnailCover}}" class="card-img-top" alt="...">
         <p class="card-price">{{ entity.price }} €</p>
-        <div class="card-body">
-            <h5 class="card-title">{{ entity.name }}</h5>
+        <div class="card-body d-flex align-items-center justify-content-center">
+            <h3 class="card-title">
+                {{ entity.name[:18] }}
+                {% if entity.name|length > 18 %}
+                    ...
+                {% endif %}
+            </h3>
         </div>
     </a>
 </div>

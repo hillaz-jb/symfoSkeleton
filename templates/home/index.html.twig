@@ -4,9 +4,10 @@
 
 {% block body %}
 <div class="container mt-5">
-    <h1>Bienvenue sur Steam-ish</h1>
+    <h1><i class="fab fa-steam-square me-3"></i>Steam-ish</h1>
+
     <div>
-        <h2 class="text-center">Les jeux</h2>
+        <h2>Les jeux du moment</h2>
         <div class="row row-cols-1 row-cols-lg-3 row-cols-xl-5">
             {% for game in gamesAlpha %}
                 {% include 'common/partials/_cardGame.html.twig' with {'entity': game} %}
@@ -14,7 +15,7 @@
         </div>
     </div>
     <div>
-        <h2 class="text-center">Les dernières sorties</h2>
+        <h2>Les dernières sorties</h2>
         <div class="row row-cols-1 row-cols-lg-3 row-cols-xl-5">
             {% for game in gamesLast %}
                 {% include 'common/partials/_cardGame.html.twig' with {'entity': game} %}
@@ -22,11 +23,11 @@
         </div>
     </div>
     <div>
-        <h2 class="text-center">Commentaires clients</h2>
-        <div class="row row-cols-1 row-cols-lg-3 row-cols-xl-5">
+        <h2>Commentaires clients</h2>
+        <div class="comments row row-cols-1 row-cols-lg-3 row-cols-xl-3">
             {% for comment in commentsLast %}
                 <div>
-                    <h3>{{ comment.game.name }}</h3>
+                    <h3><img class="img-fluid" src="{{ comment.game.thumbnailLogo }}" alt="{{ comment.game.name }}"></h3>
                     <p>{{ comment.content }}</p>
                     <p>{{ comment.account.name }} le {{ comment.createdAt|date('d-m-Y') }}</p>
                 </div>
@@ -34,7 +35,7 @@
         </div>
     </div>
     <div>
-        <h2 class="text-center">Les jeux les plus joués</h2>
+        <h2>Les jeux les plus joués</h2>
         <div class="row row-cols-1 row-cols-lg-3 row-cols-xl-5">
             {% for game in gamesMostPlayed %}
                 {% include 'common/partials/_cardGame.html.twig' with {'entity': game} %}
