@@ -2,9 +2,11 @@
 
 namespace App\Repository;
 
+use App\Entity\Comment;
 use App\Entity\Game;
 use App\Entity\Library;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -63,6 +65,24 @@ class GameRepository extends ServiceEntityRepository
     }
 
     /**
+     * @throws NonUniqueResultException
+     */
+    public function findOneDetailedGame($slug): ?Game
+    {
+        return $this->createQueryBuilder('game')
+            ->join('game.comments', 'comments')
+            ->join('game.genres','genres')
+            ->join('game.languages', 'languages')
+            ->where('game.slug = :slug')
+            ->setParameter('slug', $slug)
+            ->getQuery()
+            ->getOneOrNullResult()
+            ;
+    }
+
+
+
+    /**
      * Return all game name
      *
      * @param string $name
@@ -78,7 +98,6 @@ class GameRepository extends ServiceEntityRepository
             ->getResult()
             ;
     }
-
 
     // /**
     //  * @return Game[] Returns an array of Game objects
@@ -97,15 +116,7 @@ class GameRepository extends ServiceEntityRepository
     }
     */
 
-    /*
-    public function findOneBySomeField($value): ?Game
-    {
-        return $this->createQueryBuilder('g')
-            ->andWhere('g.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
+
+
+
 }

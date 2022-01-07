@@ -4,3 +4,8 @@ account:
       name: 'Nom'
       nickname: 'Pseudo'
       email: 'Email'
+    title: 'Comptes'
+home:
+  menu:
+    comment:
+      writted_by: 'Par %name% le %date%'

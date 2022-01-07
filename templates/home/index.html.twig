@@ -2,45 +2,70 @@
 
 {% block title %}Accueil Steam-ish{% endblock %}
 
+{% block content %}
+<body class="body-home">
+{% block header %}
+    <header>{% include 'common/partials/_header.html.twig' %}</header>
+{% endblock %}
 {% block body %}
-<div class="container mt-5">
-    <h1><i class="fab fa-steam-square me-3"></i>Steam-ish</h1>
+    <main class="container mt-5 mb-5">
+        <h1><i class="fab fa-steam-square me-3"></i>Steam-ish</h1>
 
-    <div>
-        <h2>Les jeux du moment</h2>
-        <div class="row row-cols-1 row-cols-lg-3 row-cols-xl-5">
-            {% for game in gamesAlpha %}
-                {% include 'common/partials/_cardGame.html.twig' with {'entity': game} %}
-            {% endfor %}
+        <div>
+            <h2>Les jeux du moment</h2>
+            <div class="row row-cols-1 row-cols-lg-3 row-cols-xl-5">
+                {% for game in gamesAlpha %}
+                    {% include 'common/partials/_cardGame.html.twig' with {'entity': game} %}
+                {% endfor %}
+            </div>
         </div>
-    </div>
-    <div>
-        <h2>Les dernières sorties</h2>
-        <div class="row row-cols-1 row-cols-lg-3 row-cols-xl-5">
-            {% for game in gamesLast %}
-                {% include 'common/partials/_cardGame.html.twig' with {'entity': game} %}
-            {% endfor %}
+        <div>
+            <h2>Les dernières sorties</h2>
+            <div class="row row-cols-1 row-cols-lg-3 row-cols-xl-4">
+                {% for game in gamesLast %}
+                    {% include 'common/partials/_cardGame.html.twig' with {'entity': game} %}
+                {% endfor %}
+            </div>
         </div>
-    </div>
-    <div>
-        <h2>Commentaires clients</h2>
-        <div class="comments row row-cols-1 row-cols-lg-3 row-cols-xl-3">
-            {% for comment in commentsLast %}
-                <div>
-                    <h3><img class="img-fluid" src="{{ comment.game.thumbnailLogo }}" alt="{{ comment.game.name }}"></h3>
-                    <p>{{ comment.content }}</p>
-                    <p>{{ comment.account.name }} le {{ comment.createdAt|date('d-m-Y') }}</p>
-                </div>
-            {% endfor %}
+        <div>
+            <h2>Commentaires clients</h2>
+            <div class="comments row">
+                {% for comment in commentsLast %}
+                    <div class="col-4">
+                        <div class="item mb-4 p-3">
+                            <h3><img class="img-fluid" src="{{ comment.game.thumbnailLogo }}" alt="{{ comment.game.name }}"></h3>
+                            <p>{{ comment.content }}</p>
+                            <p>{{ 'home.menu.comment.writted_by'|trans({
+                                    '%name%': comment.account.name,
+                                    '%date%': comment.createdAt|date('d/m/Y')
+                                }) }}
+                            </p>
+                            <p class="fs-5">
+                                <span class="text-success me-3"><i class="far fa-thumbs-up"></i> {{ comment.upVotes }}</span>
+                                <span class="text-danger"><i class="far fa-thumbs-down"></i> {{ comment.downVotes }}</span>
+                            </p>
+                        </div>
+                    </div>
+
+                {% endfor %}
+            </div>
         </div>
-    </div>
-    <div>
-        <h2>Les jeux les plus joués</h2>
-        <div class="row row-cols-1 row-cols-lg-3 row-cols-xl-5">
-            {% for game in gamesMostPlayed %}
-                {% include 'common/partials/_cardGame.html.twig' with {'entity': game} %}
-            {% endfor %}
+        <div>
+            <h2>Les jeux les plus joués</h2>
+            <div class="row row-cols-1 row-cols-lg-3 row-cols-xl-5">
+                {% for game in gamesMostPlayed %}
+                    {% include 'common/partials/_cardGame.html.twig' with {'entity': game} %}
+                {% endfor %}
+            </div>
         </div>
-    </div>
-    {% endblock %}
+    </main>
+{% endblock %}
+{% block footer %}
+    <footer>{% include 'common/partials/_footer.html.twig' %}</footer>
+{% endblock %}
+</body>
+{% endblock %}
+
+
+
 

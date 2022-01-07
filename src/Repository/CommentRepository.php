@@ -30,6 +30,19 @@ class CommentRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findOneGameLimitedComments(int $id, string $orderField, string $order, int $limit = 10): array {
+        return $this->createQueryBuilder('comment')
+            ->select('comment', 'game', 'account')
+            ->join('comment.account', 'account')
+            ->join('comment.game', 'game')
+            ->where('game.id = :id')
+            ->setParameter('id', $id)
+            ->orderBy('comment.'.$orderField, $order)
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
     // /**
     //  * @return Comments[] Returns an array of Comments objects
     //  */

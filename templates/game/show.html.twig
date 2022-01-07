@@ -1,10 +1,70 @@
 {% extends 'base.html.twig' %}
+{% block title %}{{ game.name }}{% endblock %}
 
 {% block body %}
-<p>{{ game.name }}</p>
+    <div class="container my-5">
+        <div class="one-game-card card mb-3">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img src="{{ game.thumbnailCover }}" class="img-fluid rounded-start" alt="pas d'image">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h1 class="card-title">
+                            {% if game.thumbnailLogo is not null %}
+                                <img src="{{ game.thumbnailLogo }}" class="img-fluid rounded-start" alt="logo">
+                            {% endif %}
+                            <br>
+                            {{ game.name }}
+                        </h1>
+                        <p class="card-text">{{ game.description }}</p>
+                        <p class="card-text">Genres : <small class="">
+                                    {% for genre in game.genres %}
+                                        <span class="ms-2">{{ genre.name }}</span>
+                                    {% endfor %}
+                            </small>
+                        </p>
+                        <p class="card-text">Publié le {{ game.publishedAt|date('d/m/Y') }}</p>
+                        <p class="card-text fs-4">{{ game.price }} €</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h2>Commentaires clients</h2>
+        <div class="comments row row-cols-1">
+            {% for comment in lastComments %}
+                <div class="mb-3">
+                    <p>{{ comment.content }}</p>
+                    <p>{{ 'home.menu.comment.writted_by'|trans({
+                            '%name%': comment.account.name,
+                            '%date%': comment.createdAt|date('d/m/Y')
+                        }) }}
+                    </p>
+                    <p class="fs-5">
+                        <span class="text-success me-3"><i class="far fa-thumbs-up"></i> {{ comment.upVotes }}</span>
+                        <span class="text-danger"><i class="far fa-thumbs-down"></i> {{ comment.downVotes }}</span>
+                    </p>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="comments row">
+            {% for comment in bestComments %}
+                <div class="mb-3">
+                    <p>{{ comment.content }}</p>
+                    <p>{{ 'home.menu.comment.writted_by'|trans({
+                            '%name%': comment.account.name,
+                            '%date%': comment.createdAt|date('d/m/Y')
+                        }) }}
+                    </p>
+                    <p class="fs-5">
+                        <span class="text-success me-3"><i class="far fa-thumbs-up"></i> {{ comment.upVotes }}</span>
+                        <span class="text-danger"><i class="far fa-thumbs-down"></i> {{ comment.downVotes }}</span>
+                    </p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}
 
-{% block title %}
 
-{% endblock %}
 

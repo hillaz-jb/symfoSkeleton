@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Welcome!{% endblock %}</title>
@@ -13,7 +13,12 @@
         {{ encore_entry_script_tags('scripts') }}
     {% endblock %}
 </head>
+
+
+{% block content %}
 <body>
+
+{#<body {% if (path(app.request.get('_route')) == '/') %}class="body-home"{% endif %}>#}
 {% block header %}
     <header>{% include 'common/partials/_header.html.twig' %}</header>
 {% endblock %}
@@ -25,4 +30,8 @@
 {% endblock %}
 
 </body>
+{% endblock %}
+
+
+
 </html>
