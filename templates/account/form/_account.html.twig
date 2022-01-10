@@ -1,0 +1,20 @@
+<div class="container">
+    {#{{ form_start(form) }}
+            {{ form_label(form.name) }}
+            {{ form_widget(form.name) }}
+            {{ form_label(form.email) }}
+            {{ form_widget(form.email) }}
+            {{ form_label(form.nickname) }}
+            {{ form_widget(form.nickname) }}
+            {{ form_label(form.wallet) }}
+            {{ form_widget(form.wallet) }}
+        <div>
+            <button class="btn btn-outline-dark" type="submit">Soumettre</button>
+        </div>
+        {{ form_end(form) }}#}
+
+    {# OU grace a form_theme #}
+
+    {{ form_start(form) }}
+    {{ form_end(form) }}
+</div>

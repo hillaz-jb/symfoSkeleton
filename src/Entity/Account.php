@@ -25,7 +25,7 @@ class Account
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private string $nickname;
 
-    #[ORM\Column(type: 'integer', options: ["default" => 0])]
+    #[ORM\Column(type: 'integer')]
     private float $wallet;
 
     #[ORM\OneToMany(mappedBy: 'account', targetEntity: Comment::class)]
@@ -38,6 +38,7 @@ class Account
     {
         $this->comments = new ArrayCollection();
         $this->libraries = new ArrayCollection();
+        $this->wallet = 0;
     }
 
     public function getId(): ?int
