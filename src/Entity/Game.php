@@ -47,11 +47,18 @@ class Game
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private string $slug;
 
+    #[ORM\ManyToMany(targetEntity: Country::class, inversedBy: 'games')]
+    private $countries;
+
+    #[ORM\ManyToOne(targetEntity: Publisher::class, inversedBy: 'games')]
+    private $publisher;
+
     #[Pure] public function __construct()
     {
         $this->languages = new ArrayCollection();
         $this->genres = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->countries = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -217,6 +224,42 @@ class Game
     public function setSlug(?string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Country[]
+     */
+    public function getCountries(): Collection
+    {
+        return $this->countries;
+    }
+
+    public function addCountry(Country $country): self
+    {
+        if (!$this->countries->contains($country)) {
+            $this->countries[] = $country;
+        }
+
+        return $this;
+    }
+
+    public function removeCountry(Country $country): self
+    {
+        $this->countries->removeElement($country);
+
+        return $this;
+    }
+
+    public function getPublisher(): ?Publisher
+    {
+        return $this->publisher;
+    }
+
+    public function setPublisher(?Publisher $publisher): self
+    {
+        $this->publisher = $publisher;
 
         return $this;
     }
