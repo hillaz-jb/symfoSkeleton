@@ -39,11 +39,33 @@ class CountryController extends AbstractController
         $form = $this->createForm(CountryFormType::class, new Country());
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid() && $form->isValid()) {
+            /** @var Country $country */
+            $country = $form->getData();
+            $urlFlag = $country->getCode();
+            $country->setUrlFlag("https://flagcdn.com/24x18/$urlFlag.png");
             $this->em->persist($form->getData());
             $this->em->flush();
             return $this->redirectToRoute('countries_index');
         }
         return $this->render('country/new.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/countries/edit/{id}', name: 'country_edit')]
+    public function editCountry(Request $request, Country $country): Response {
+        $form = $this->createForm(CountryFormType::class, $country);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var Country $country */
+            $country = $form->getData();
+            $urlFlag = $country->getCode();
+            $country->setUrlFlag("https://flagcdn.com/24x18/$urlFlag.png");
+            $this->em->persist($form->getData());
+            $this->em->flush();
+            return $this->redirectToRoute('countries_index');
+        }
+        return $this->render('country/edit.html.twig',[
             'form' => $form->createView(),
         ]);
     }

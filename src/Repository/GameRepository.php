@@ -72,7 +72,7 @@ class GameRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('game')
             ->join('game.comments', 'comments')
             ->join('game.genres','genres')
-            ->join('game.languages', 'languages')
+            ->leftjoin('game.countries', 'countries')
             ->where('game.slug = :slug')
             ->setParameter('slug', $slug)
             ->getQuery()
@@ -115,8 +115,4 @@ class GameRepository extends ServiceEntityRepository
         ;
     }
     */
-
-
-
-
 }

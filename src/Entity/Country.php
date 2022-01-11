@@ -6,6 +6,7 @@ use App\Repository\CountryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JetBrains\PhpStorm\Pure;
 
 #[ORM\Entity(repositoryClass: CountryRepository::class)]
 class Country
@@ -13,24 +14,27 @@ class Country
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
-    private $id;
+    private int $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $name;
+    private string $name;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $nationality;
+    private string $nationality;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $flag;
+    private ?string $urlFlag;
 
     #[ORM\ManyToMany(targetEntity: Game::class, mappedBy: 'countries')]
-    private $games;
+    private Collection $games;
 
     #[ORM\OneToMany(mappedBy: 'country', targetEntity: Publisher::class)]
-    private $publishers;
+    private Collection $publishers;
 
-    public function __construct()
+    #[ORM\Column(type: 'string', length: 6)]
+    private string $code;
+
+    #[Pure] public function __construct()
     {
         $this->games = new ArrayCollection();
         $this->publishers = new ArrayCollection();
@@ -65,20 +69,20 @@ class Country
         return $this;
     }
 
-    public function getFlag(): ?string
+    public function getUrlFlag(): ?string
     {
-        return $this->flag;
+        return $this->urlFlag;
     }
 
-    public function setFlag(?string $flag): self
+    public function setUrlFlag(?string $urlFlag): self
     {
-        $this->flag = $flag;
+        $this->urlFlag = $urlFlag;
 
         return $this;
     }
 
     /**
-     * @return Collection|Game[]
+     * @return Collection
      */
     public function getGames(): Collection
     {
@@ -105,7 +109,7 @@ class Country
     }
 
     /**
-     * @return Collection|Publisher[]
+     * @return Collection
      */
     public function getPublishers(): Collection
     {
@@ -130,6 +134,18 @@ class Country
                 $publisher->setCountry(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCode(): ?string
+    {
+        return $this->code;
+    }
+
+    public function setCode(string $code): self
+    {
+        $this->code = $code;
 
         return $this;
     }

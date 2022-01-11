@@ -8,6 +8,12 @@ account:
       nickname: 'Pseudo'
       email: 'Email'
     title: 'Comptes'
+country:
+  index:
+    table:
+      name: 'Nom'
+      nationality: 'Nationalité'
+      code: 'Code'
 home:
   menu:
     comment:

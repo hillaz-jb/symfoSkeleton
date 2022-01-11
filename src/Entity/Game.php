@@ -48,10 +48,10 @@ class Game
     private string $slug;
 
     #[ORM\ManyToMany(targetEntity: Country::class, inversedBy: 'games')]
-    private $countries;
+    private Collection $countries;
 
     #[ORM\ManyToOne(targetEntity: Publisher::class, inversedBy: 'games')]
-    private $publisher;
+    private string $publisher;
 
     #[Pure] public function __construct()
     {
@@ -139,7 +139,7 @@ class Game
     }
 
     /**
-     * @return Collection|Language[]
+     * @return Collection
      */
     public function getLanguages(): Collection
     {
@@ -163,7 +163,7 @@ class Game
     }
 
     /**
-     * @return Collection|Genre[]
+     * @return Collection
      */
     public function getGenres(): Collection
     {
