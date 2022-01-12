@@ -1,6 +1,11 @@
 common:
+  index:
+    see: 'Voir'
+    edit: 'Editer'
+    title: 'Liste des %entity%'
   button:
     submit: 'valider'
+    new: 'Ajouter %entity%'
 account:
   index:
     table:
@@ -8,13 +13,41 @@ account:
       nickname: 'Pseudo'
       email: 'Email'
     title: 'Comptes'
+  show:
+    title: 'Compte'
+  new:
+    title: "Ajout d'un compte"
+  edit:
+    title: "Modification d'un compte"
 country:
   index:
     table:
       name: 'Nom'
       nationality: 'Nationalité'
       code: 'Code'
+    title: 'Pays'
+  new:
+    title: "Ajout d'un pays"
+  edit:
+    title: "Modification d'un pays"
 home:
   menu:
     comment:
       writted_by: 'Par %name% le %date%'
+game:
+  index:
+    title: 'Jeux'
+publisher:
+  index:
+    title: 'Editeurs'
+    table:
+      name: 'Nom'
+      website: 'Site web'
+      directorName: 'Directeur'
+      createdAt: 'Date de création'
+  show:
+    title: 'Editeur'
+  new:
+    title: "Ajout d'un éditeur"
+  edit:
+    title: "Modification d'un éditeur"

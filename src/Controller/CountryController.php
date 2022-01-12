@@ -30,18 +30,17 @@ class CountryController extends AbstractController
     public function index(): Response
     {
         return $this->render('country/index.html.twig', [
-            'controller_name' => 'CountryController',
+            'countries' => $this->countryRepository->findAll(),
         ]);
     }
 
     #[Route('/countries/new', name: 'country_new')]
     public function createCountry(Request $request): Response {
-        $form = $this->createForm(CountryFormType::class, new Country());
+        $country = new Country();
+        $form = $this->createForm(CountryFormType::class, $country);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid() && $form->isValid()) {
-            /** @var Country $country */
-            $country = $form->getData();
-            $urlFlag = $country->getCode();
+            $urlFlag = $country->getCode(); // l'objet Country se remplit automatiquement donc pas besoin de getData
             $country->setUrlFlag("https://flagcdn.com/24x18/$urlFlag.png");
             $this->em->persist($form->getData());
             $this->em->flush();
@@ -57,8 +56,6 @@ class CountryController extends AbstractController
         $form = $this->createForm(CountryFormType::class, $country);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var Country $country */
-            $country = $form->getData();
             $urlFlag = $country->getCode();
             $country->setUrlFlag("https://flagcdn.com/24x18/$urlFlag.png");
             $this->em->persist($form->getData());

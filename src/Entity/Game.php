@@ -8,14 +8,21 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JetBrains\PhpStorm\Pure;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: GameRepository::class)]
+#[UniqueEntity(
+    fields: ['name'],
+    message: 'common.constraints.unique',
+)]
 class Game
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private int $id;
+
+    use TraitSlug;
 
     #[ORM\Column(type: 'string', length: 255)]
     private string $name;
@@ -44,8 +51,7 @@ class Game
     #[ORM\OneToMany(mappedBy: 'game', targetEntity: Comment::class, orphanRemoval: true)]
     private Collection $comments;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private string $slug;
+
 
     #[ORM\ManyToMany(targetEntity: Country::class, inversedBy: 'games')]
     private Collection $countries;
@@ -187,7 +193,7 @@ class Game
     }
 
     /**
-     * @return Collection|Comment[]
+     * @return Collection
      */
     public function getComments(): Collection
     {
@@ -212,18 +218,6 @@ class Game
                 $comment->setGame(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getSlug(): ?string
-    {
-        return $this->slug;
-    }
-
-    public function setSlug(?string $slug): self
-    {
-        $this->slug = $slug;
 
         return $this;
     }

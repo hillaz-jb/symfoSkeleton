@@ -7,8 +7,18 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JetBrains\PhpStorm\Pure;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: CountryRepository::class)]
+#[UniqueEntity(
+    fields: ['name'],
+    message: 'common.constraints.unique',
+)]
+#[UniqueEntity(
+    fields: ['code'],
+    message: 'common.constraints.unique',
+)]
 class Country
 {
     #[ORM\Id]
@@ -32,6 +42,12 @@ class Country
     private Collection $publishers;
 
     #[ORM\Column(type: 'string', length: 6)]
+    #[Assert\Length(
+        min: '2',
+        max: '6',
+        minMessage: 'country.constraints.code.min_length',
+        maxMessage: 'country.constraints.code.max_length'
+    )]
     private string $code;
 
     #[Pure] public function __construct()

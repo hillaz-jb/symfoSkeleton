@@ -30,21 +30,10 @@ class AccountController extends AbstractController
     }
 
     #[Route('/', name: 'account_index')]
-    public function index(AccountRepository $accountRepository): Response
+    public function index(): Response
     {
         return $this->render('account/index.html.twig', [
             'accounts' => $this->accountRepository->findLimitedNbAccount(50),
-        ]);
-    }
-
-    /**
-     * @throws NonUniqueResultException
-     */
-    #[Route('/{id}', name: 'account_show')]
-    public function show($id): Response
-    {
-        return $this->render('account/show.html.twig', [
-            'account' => $this->accountRepository->findOneDetailedAccount($id),
         ]);
     }
 
@@ -59,6 +48,31 @@ class AccountController extends AbstractController
         }
         return $this->render('account/new.html.twig', [
             'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/accounts/edit/{id}', name: 'account_edit')]
+    public function editCountry(Request $request, Account $account): Response {
+        $form = $this->createForm(AccountFormType::class, $account);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->em->persist($form->getData());
+            $this->em->flush();
+            return $this->redirectToRoute('account_index');
+        }
+        return $this->render('account/edit.html.twig',[
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     */
+    #[Route('/{id}', name: 'account_show')]
+    public function show($id): Response
+    {
+        return $this->render('account/show.html.twig', [
+            'account' => $this->accountRepository->findOneDetailedAccount($id),
         ]);
     }
 

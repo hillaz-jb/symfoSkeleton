@@ -6,8 +6,15 @@ use App\Repository\PublisherRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JetBrains\PhpStorm\Pure;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use DateTime;
 
 #[ORM\Entity(repositoryClass: PublisherRepository::class)]
+#[UniqueEntity(
+    fields: ['name'],
+    message: 'common.constraints.unique',
+)]
 class Publisher
 {
     #[ORM\Id]
@@ -16,24 +23,24 @@ class Publisher
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $name;
+    private string $name;
 
     #[ORM\Column(type: 'string', length: 255)]
-    private $directorName;
+    private string $directorName;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $website;
+    private string $website;
 
     #[ORM\Column(type: 'datetime')]
-    private $createdAt;
+    private DateTime $createdAt;
 
     #[ORM\ManyToOne(targetEntity: Country::class, inversedBy: 'publishers')]
-    private $country;
+    private Country $country;
 
     #[ORM\OneToMany(mappedBy: 'publisher', targetEntity: Game::class)]
-    private $games;
+    private Collection $games;
 
-    public function __construct()
+    #[Pure] public function __construct()
     {
         $this->games = new ArrayCollection();
     }

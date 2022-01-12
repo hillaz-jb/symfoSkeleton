@@ -1,11 +1,15 @@
 {% extends 'base.html.twig' %}
-{% form_theme form 'bootstrap_5_layout.html.twig' %}
-{% block body %}
-    {% include 'account/form/_account.html.twig' %}
-
-{% endblock %}
 
 {% block title %}
+    {{ 'account.new.title'|trans }}
+{% endblock %}
 
+{% form_theme form 'bootstrap_5_layout.html.twig' %}
+{% block body %}
+    {% include 'common/partials/_form.html.twig' with
+        {
+            'title': 'account.new.title'
+        }
+    %}
 {% endblock %}
 

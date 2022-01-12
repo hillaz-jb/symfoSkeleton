@@ -11,6 +11,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+//TODO REGROUPER POUR SIMPLIFIER REQUETES NEW ET EDIT
+//TODO SHOW
+
 class PublisherController extends AbstractController
 {
     private EntityManagerInterface $em;
@@ -30,7 +33,7 @@ class PublisherController extends AbstractController
     public function index(): Response
     {
         return $this->render('publisher/index.html.twig', [
-            'controller_name' => 'PublisherController',
+            'publishers' => $this->publisherRepository->findAll(),
         ]);
     }
 
@@ -44,6 +47,20 @@ class PublisherController extends AbstractController
             return $this->redirectToRoute('publisher_index');
         }
         return $this->render('publisher/new.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route('/publishers/edit/{id}', name: 'publisher_edit')]
+    public function editCountry(Request $request, Publisher $publisher): Response {
+        $form = $this->createForm(PublisherFormType::class, $publisher);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->em->persist($form->getData());
+            $this->em->flush();
+            return $this->redirectToRoute('publisher_index');
+        }
+        return $this->render('publisher/edit.html.twig',[
             'form' => $form->createView(),
         ]);
     }

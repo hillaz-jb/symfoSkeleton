@@ -1,20 +1,53 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CountryController!{% endblock %}
+{% block title %}{{ 'country.index.title'|trans }}{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/HB/Jérémy/Symfony/symfoSkeleton.old/src/Controller/CountryController.php'|file_link(0) }}">src/Controller/CountryController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/HB/Jérémy/Symfony/symfoSkeleton.old/templates/country/index.html.twig'|file_link(0) }}">templates/country/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <main class="container mt-5 mb-5">
+        <h1 class="text-center mb-5">
+            {{ 'common.index.title'|trans({
+                '%entity%': 'country.index.title'|trans,
+            }) }}
+        </h1>
+        <div class="">
+            <a href="{{ path('country_new') }}" class="btn btn-success">{{ 'common.button.new'|trans({
+                    '%entity%': 'country.index.title'|trans,
+                }) }}
+            </a>
+        </div>
+        <div class="row">
+            <div class="col-8 offset-2">
+                <table class="table table-striped table-dark text-center">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>{{ 'country.index.table.name'|trans }}</th>
+                        <th>{{ 'country.index.table.nationality'|trans }}</th>
+                        <th>{{ 'country.index.table.code'|trans }}</th>
+                        <th>{{ 'common.index.edit'|trans }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for country in countries %}
+                        <tr>
+                            <td>
+                                {% if country.urlFlag is not null %}
+                                    <img class="me-3" src="{{ country.urlFlag }}" alt="flag">
+                                {% endif %}
+                            </td>
+                            <td>{{ country.name }}</td>
+                            <td>{{ country.nationality }}</td>
+                            <td>{{ country.code }}</td>
+                            <td><a href="{{ path('country_edit', {'id': country.id}) }}" class=""><i
+                                            class="fas fa-pencil-alt text-decoration-none text-light fs-4"></i></a></td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="text-center">
+            <img class="img-fluid w-25" src="{{ asset('build/images/world_map.svg') }}" alt="logo">
+        </div>
+    </main>
 {% endblock %}

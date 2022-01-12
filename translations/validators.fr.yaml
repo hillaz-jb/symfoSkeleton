@@ -1,0 +1,13 @@
+common:
+  constraints:
+    unique : '{{ label }} déjà existant !'
+account:
+  constraints:
+    min_length: '{{ label }} : {{ limit }} caractères minimum!'
+    max_length: '{{ label }} : {{ limit }} caractères maximum!'
+    email: "{{ value }} n'est pas un email valide"
+country:
+  constraints:
+    code:
+      min_length: 'Le code doit faire minimum {{ limit }} caractères'
+      max_length: 'Le code doit faire maximum {{ limit }} caractères'

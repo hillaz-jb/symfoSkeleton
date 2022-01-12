@@ -29,6 +29,10 @@ class AccountFormType extends AbstractType
                 'label' => 'common.button.submit',
                 'attr' => [
                     'mapped' => false,
+                    'class' => 'btn-success'
+                ],
+                'row_attr' => [
+                    'class' => 'mb-3 text-center'
                 ]
             ]);
     }

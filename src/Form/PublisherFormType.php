@@ -29,24 +29,38 @@ class PublisherFormType extends AbstractType
                 'required' => false,
             ])
             ->add('createdAt', DateType::class, [
-                //'format' => 'yyyy-MM-dd',
                 'widget' => 'single_text',
                 'label' => 'publisher.index.table.createdAt',
                 'required' => false,
+                'attr' => array(
+                    'min' => date('1900-01-01'),
+                    'max' => date('2040-01-01'),
+                )
             ])
             ->add('country', EntityType::class, [
                 'class' => Country::class,
                 'choice_label' => 'name',
+                'label' => 'country.index.table.nationality',
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('country')
                         ->orderBy('country.name', 'ASC');
                 },
                 'required' => false,
             ])
+            /*->add('country', CountryFormType::class, [
+                'required' => false,
+                'attr' => [
+                    'mapped' => false,
+                ]
+            ])*/
             ->add('submit', SubmitType::class, [
                 'label' => 'common.button.submit',
                 'attr' => [
                     'mapped' => false,
+                    'class' => 'btn-success',
+                ],
+                'row_attr' => [
+                    'class' => 'mb-3 text-center'
                 ]
             ]);
         ;

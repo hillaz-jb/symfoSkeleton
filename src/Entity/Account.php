@@ -7,8 +7,18 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JetBrains\PhpStorm\Pure;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: AccountRepository::class)]
+#[UniqueEntity(
+    fields: ['name'],
+    message: 'common.constraints.unique',
+)]
+#[UniqueEntity(
+    fields: ['email'],
+    message: 'account.constraints.unique',
+)]
 class Account
 {
     #[ORM\Id]
@@ -20,9 +30,16 @@ class Account
     private string $name;
 
     #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\Email(
+        message: 'account.constraints.email',
+    )]
     private string $email;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[Assert\Length(
+        min: '2',
+        minMessage: 'account.constraints.min_length',
+    )]
     private string $nickname;
 
     #[ORM\Column(type: 'integer')]
